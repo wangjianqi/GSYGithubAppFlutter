@@ -46,6 +46,7 @@ class _PersonState extends BasePersonState<PersonPage> {
 
   _PersonState(this.userName);
 
+  ///处理用户信息显示
   _resolveUserInfo(res) {
     if (isShow) {
       setState(() {
@@ -62,39 +63,36 @@ class _PersonState extends BasePersonState<PersonPage> {
     }
     isLoading = true;
     page = 1;
+    ///获取网络用户数据
     var userResult = await UserDao.getUserInfo(userName, needDb: true);
     if (userResult != null && userResult.result) {
       _resolveUserInfo(userResult);
       if (userResult.next != null) {
-        userResult.next.then((resNext) {
+        userResult.next().then((resNext) {
           _resolveUserInfo(resNext);
         });
       }
     } else {
       return null;
     }
+    ///获取用户动态或者组织成员
     var res = await _getDataLogic();
     resolveRefreshResult(res);
     resolveDataResult(res);
     if (res.next != null) {
-      var resNext = await res.next;
+      var resNext = await res.next();
       resolveRefreshResult(resNext);
       resolveDataResult(resNext);
     }
     isLoading = false;
+    ///获取当前用户的关注状态
     _getFocusStatus();
-    ReposDao.getUserRepository100StatusDao(_getUserName()).then((res) {
-      if (res != null && res.result) {
-        if (isShow) {
-          setState(() {
-            beStaredCount = res.data.toString();
-          });
-        }
-      }
-    });
+    ///获取用户仓库前100个star统计数据
+    getHonor(_getUserName());
     return null;
   }
 
+  ///获取当前用户的关注状态
   _getFocusStatus() async {
     var focusRes = await UserDao.checkFollowDao(userName);
     if (isShow) {
@@ -107,6 +105,7 @@ class _PersonState extends BasePersonState<PersonPage> {
     }
   }
 
+  ///获取用户信息里的用户名
   _getUserName() {
     if (userInfo == null) {
       return new User.empty();
@@ -114,6 +113,7 @@ class _PersonState extends BasePersonState<PersonPage> {
     return userInfo.login;
   }
 
+  ///获取用户动态或者组织成员
   _getDataLogic() async {
     if (userInfo.type == "Organization") {
       return await UserDao.getMemberDao(_getUserName(), page);
@@ -152,6 +152,7 @@ class _PersonState extends BasePersonState<PersonPage> {
         floatingActionButton: new FloatingActionButton(
             child: new Text(focus),
             onPressed: () {
+              ///非组织成员可以关注
               if (focus == '') {
                 return;
               }

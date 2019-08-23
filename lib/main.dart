@@ -15,6 +15,7 @@ import 'package:gsy_github_app_flutter/page/home_page.dart';
 import 'package:gsy_github_app_flutter/page/login_page.dart';
 import 'package:gsy_github_app_flutter/page/welcome_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'package:gsy_github_app_flutter/common/net/code.dart';
 
@@ -25,6 +26,7 @@ void main() {
   runZoned(() {
     runApp(FlutterReduxApp());
     PaintingBinding.instance.imageCache.maximumSize = 100;
+    Provider.debugCheckInvalidValueType = null;
   }, onError: (Object obj, StackTrace stack) {
     print(obj);
     print(stack);
@@ -66,7 +68,7 @@ class FlutterReduxApp extends StatelessWidget {
             theme: store.state.themeData,
             routes: {
               WelcomePage.sName: (context) {
-                store.state.platformLocale = Localizations.localeOf(context);
+                store.state.platformLocale = WidgetsBinding.instance.window.locale;
                 return WelcomePage();
               },
               HomePage.sName: (context) {
@@ -113,6 +115,8 @@ class _GSYLocalizations extends State<GSYLocalizations> {
   @override
   void initState() {
     super.initState();
+
+    ///Stream演示event bus
     stream = eventBus.on<HttpErrorEvent>().listen((event) {
       errorHandleFunction(event.code, event.message);
     });
@@ -127,6 +131,7 @@ class _GSYLocalizations extends State<GSYLocalizations> {
     }
   }
 
+  ///网络错误提醒
   errorHandleFunction(int code, message) {
     switch (code) {
       case Code.NETWORK_ERROR:

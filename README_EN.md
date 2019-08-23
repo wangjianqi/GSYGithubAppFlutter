@@ -35,8 +35,17 @@ With the use and feedback of the project, will user experience and function opti
 * ### [Flutter 完整开发实战详解(十一、全面深入理解Stream)](https://juejin.im/post/5cc2acf86fb9a0321f042041)
 * ### [Flutter 完整开发实战详解(十二、全面深入理解状态管理设计)](https://juejin.im/post/5cc816866fb9a03231209c7c)
 * ### [Flutter 完整开发实战详解(十三、全面深入触摸和滑动原理)](https://juejin.im/post/5cd54839f265da03b2044c32)
+* ### [Flutter 完整开发实战详解(十四、混合开发打包 Android 篇)](https://juejin.im/post/5cf527036fb9a07ed911acd8)
+* ### [Flutter 完整开发实战详解(十五、全面理解State与Provider)](https://juejin.im/post/5d0634c7f265da1b91639232)
+* ### [Flutter 完整开发实战详解(十六、详解自定义布局实战)](https://juejin.im/post/5d1af0aee51d454fbf540a52)
 
+----
+* ### [全网最全 Flutter 与 React Native 深入对比分析](https://juejin.im/post/5d0bac156fb9a07ec56e7f15)
 * ### [Flutter 番外篇之面试知识点集锦](https://juejin.im/post/5cd9875ae51d453d022cb662)
+* ### [Flutter 开发实战与前景展望 - RTC Dev Meetup](https://juejin.im/post/5ce7ddf95188257a2b1eac8a)
+* ### [目前各种主流状态管理演示Demo](https://github.com/CarGuo/state_manager_demo)
+
+----
 
 
 [![GitHub stars](https://img.shields.io/github/stars/CarGuo/GSYGithubAppFlutter.svg)](https://github.com/CarGuo/GSYGithubAppFlutter/stargazers)
@@ -46,7 +55,7 @@ With the use and feedback of the project, will user experience and function opti
 
 ### Operation instructions
 
-1. Configure the Flutter development environment (Tag of the current version of Flutter SDK **  master v1.6.1 **).
+1. Configure the Flutter development environment (Tag of the current version of Flutter SDK  **1.7.8** ).
 
 2. Clone code, execute `Packages get'to install third-party packages.
 
@@ -69,7 +78,7 @@ With the use and feedback of the project, will user experience and function opti
 
 4、Be careful
 
->### Local Flutter SDK version  master v1.6.1 or more. 2. Does the third-party package version in pubspec. yaml correspond to the third-party package version in pubspec. lock?
+>### Local Flutter SDK version  1.7.8 or more. 2. Does the third-party package version in pubspec. yaml correspond to the third-party package version in pubspec. lock?
 
 
 ## Project Structure
@@ -106,7 +115,7 @@ With the use and feedback of the project, will user experience and function opti
 
 ### Third-party framework
 
->Current Flutter SDK version master v1.6.1
+>Current Flutter SDK version **1.7.8**
 
 | 库                          | 功能             |
 | -------------------------- | -------------- |
@@ -134,9 +143,11 @@ With the use and feedback of the project, will user experience and function opti
 | **path_provider**          | **path**       |
 | **permission_handler**     | **permission**         |
 | **scope_model**            | **like redux**    |
+| **lottie**                 | **svg**    |
+| **flare**                  | **flare**    |
 
 
-<img src="https://github.com/CarGuo/GSYGithubAppFlutter/blob/master/thanks.jpg" width="426px"/>
+![](https://github.com/CarGuo/GSYGithubAppFlutter/blob/master/thanks.jpg)
 
 
 ### LICENSE

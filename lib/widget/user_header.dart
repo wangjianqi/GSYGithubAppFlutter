@@ -225,15 +225,19 @@ class UserHeaderItem extends StatelessWidget {
               ///用户描述
               new Container(
                   child: new Text(
-                    userInfo.bio == null
-                        ? CommonUtils.getLocale(context).user_create_at +
-                            CommonUtils.getDateStr(userInfo.created_at)
-                        : userInfo.bio +
-                            "\n" +
-                            CommonUtils.getLocale(context).user_create_at +
-                            CommonUtils.getDateStr(userInfo.created_at),
+                    userInfo.bio == null ? "" : userInfo.bio,
                     style: GSYConstant.smallSubLightText,
                     maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  alignment: Alignment.topLeft),
+
+              ///用户创建时长
+              new Container(
+                  child: new Text(
+                    CommonUtils.getLocale(context).user_create_at +
+                        CommonUtils.getDateStr(userInfo.created_at),
+                    style: GSYConstant.smallSubLightText,
                     overflow: TextOverflow.ellipsis,
                   ),
                   margin: new EdgeInsets.only(top: 6.0, bottom: 2.0),
@@ -252,8 +256,10 @@ class UserHeaderBottom extends StatelessWidget {
   final User userInfo;
   final String beStaredCount;
   final Radius radius;
+  final List honorList;
 
-  UserHeaderBottom(this.userInfo, this.beStaredCount, this.radius);
+  UserHeaderBottom(
+      this.userInfo, this.beStaredCount, this.radius, this.honorList);
 
   ///底部状态栏
   _getBottomItem(String title, var value, onPressed) {
@@ -357,7 +363,11 @@ class UserHeaderBottom extends StatelessWidget {
             _getBottomItem(
               CommonUtils.getLocale(context).user_tab_honor,
               beStaredCount,
-              () {},
+              () {
+                if (honorList != null) {
+                  NavigatorUtils.goHonorListPage(context, honorList);
+                }
+              },
             ),
           ],
         ),

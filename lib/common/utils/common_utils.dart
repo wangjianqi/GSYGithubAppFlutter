@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gsy_github_app_flutter/common/config/config.dart';
+import 'package:gsy_github_app_flutter/common/local/local_storage.dart';
 import 'package:gsy_github_app_flutter/common/localization/default_localizations.dart';
 import 'package:gsy_github_app_flutter/common/net/address.dart';
 import 'package:gsy_github_app_flutter/common/redux/gsy_state.dart';
@@ -21,7 +23,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_statusbar/flutter_statusbar.dart';
 
 /**
  * 通用逻辑
@@ -38,13 +39,6 @@ class CommonUtils {
   static final double HOURS_LIMIT = 24 * MINUTES_LIMIT;
 
   static final double DAYS_LIMIT = 30 * HOURS_LIMIT;
-
-  static double sStaticBarHeight = 0.0;
-
-  static void initStatusBarHeight(context) async {
-    sStaticBarHeight =
-        await FlutterStatusbar.height / MediaQuery.of(context).devicePixelRatio;
-  }
 
   static String getDateStr(DateTime date) {
     if (date == null || date.toString() == null) {
@@ -152,6 +146,19 @@ class CommonUtils {
 
   static getThemeData(Color color) {
     return ThemeData(primarySwatch: color, platform: TargetPlatform.android);
+  }
+
+
+  static showLanguageDialog(BuildContext context, Store store) {
+    List<String> list = [
+      CommonUtils.getLocale(context).home_language_default,
+      CommonUtils.getLocale(context).home_language_zh,
+      CommonUtils.getLocale(context).home_language_en,
+    ];
+    CommonUtils.showCommitOptionDialog(context, list, (index) {
+      CommonUtils.changeLocale(store, index);
+      LocalStorage.save(Config.LOCALE, index.toString());
+    }, height: 150.0);
   }
 
   /**
